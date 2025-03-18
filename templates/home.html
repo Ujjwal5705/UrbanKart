@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<section class="section-intro padding-y-sm">
+	<div class="container">
+		<div class="intro-banner-wrap">
+			<img src="{% static 'images/banners/cover3.jpg' %}" class="img-fluid rounded">
+		</div>
+	</div>
+</section>
+
+<section class="section-name padding-y-sm">
+	<div class="container">
+		<header class="section-heading">
+			<a href="{% url 'store' %}" class="btn btn-outline-primary float-right">See all</a>
+			<h3 class="section-title">Popular products</h3>
+		</header>
+
+		<div class="row">
+			{% for prod in products %}
+				<div class="col-md-3">
+					<div class="card card-product-grid">
+						<a href="{{prod.get_url}}" class="img-wrap"> <img src="{{prod.images.url}}"> </a>
+						<figcaption class="info-wrap">
+							<a href="{{prod.get_url}}" class="title">{{prod.product_name}}</a>
+							<div class="price mt-1">$ {{prod.price}}</div>
+						</figcaption>
+					</div>
+				</div>	
+			{% endfor %}
+		</div>
+	</div>
+</section>
+
+{% endblock %}
