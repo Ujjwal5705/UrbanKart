@@ -10,7 +10,6 @@
         <a href="{% url 'store' %}" class="btn btn-primary col-lg-2">Continue Shopping</a>
       </div>
     {% else %}
-    {% for item in cart_items %}
     <div class="row">
       <aside class="col-lg-9">
         <div class="card">
@@ -23,6 +22,7 @@
                 <th scope="col" class="text-right" width="200"></th>
               </tr>
             </thead>
+            {% for item in cart_items %}
             <tbody>
               <tr>
                 <td>
@@ -31,7 +31,7 @@
                       <img src="{{item.product.images.url}}" class="img-sm" />
                     </div>
                     <figcaption class="info">
-                      <a href="#" class="title text-dark"
+                      <a href="{{item.product.get_url}}" class="title text-dark"
                         >{{item.product.product_name}}</a
                       >
                       <p class="text-muted small">
@@ -68,6 +68,7 @@
                 </td>
               </tr>
             </tbody>
+            {% endfor %}
           </table>
         </div>
       </aside>
@@ -94,7 +95,6 @@
         </div>
       </aside>
     </div>
-    {% endfor %}
     {% endif %}
   </div>
 </section>
