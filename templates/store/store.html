@@ -6,7 +6,11 @@
 
 <section class="section-pagetop bg">
     <div class="container">
-        <h2 class="title-page">Our Store</h2>
+        {% if 'search' in request.path %}
+            <h2 class="title-page">Search Result</h2>
+        {% else %}
+            <h2 class="title-page">Our Store</h2>
+        {% endif %}
     </div>
 </section>
 
@@ -117,11 +121,17 @@
     
     <header class="border-bottom mb-4 pb-3">
             <div class="form-inline">
-                <span class="mr-md-auto">{{prod_count}} Items found </span>
-                
+                {% if prod_count != 0 %}
+                    <span class="mr-md-auto">{{prod_count}} Items found </span>
+                {% endif %}
             </div>
     </header>
     
+    {% if prod_count == 0 %}
+    <div class="d-flex justify-content-center mt-3">
+        <h3>Nothing Found!</h3>
+    </div>
+    {% else %}
     <div class="row">
         {% for prod in products %}
         <div class="col-md-4">
@@ -142,6 +152,7 @@
         </div>
         {% endfor %}
     </div>
+    {% endif %}
     
     <!-- Pagination -->
     <nav class="mt-4" aria-label="Page navigation sample">
