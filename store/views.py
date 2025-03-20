@@ -15,6 +15,7 @@ def store(request, category_slug = None):
         products   = Product.objects.filter(is_available=True)
         prod_count = products.count()
 
+        
     context = {
         "products": products,
         "prod_count": prod_count,

@@ -9,7 +9,7 @@
       <div class="collapse navbar-collapse" id="navbarTop4">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item dropdown">
-                <a href="#" class="nav-link">   English </a>
+                <a href="#" class="nav-link"> English </a>
                 
             </li>
             <li class="nav-item dropdown">
@@ -70,7 +70,7 @@
                         </div>
                         <a href="{% url 'cart' %}" class="widget-header pl-3 ml-3">
                             <div class="icon icon-sm rounded-circle border"><i class="fa fa-shopping-cart"></i></div>
-                            <span class="badge badge-pill badge-danger notify">0</span>
+                            <span class="badge badge-pill badge-danger notify">{{cart_items_count}}</span>
                         </a>
                     </div>
                 </div>
