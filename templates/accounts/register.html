@@ -2,9 +2,9 @@
 {% block content %}
 
 <section class="section-content padding-y">
-
 	<div class="card mx-auto" style="max-width:520px; margin-top:40px;">
       <article class="card-body">
+		{% include 'includes/alerts.html' %}
 		<header class="mb-4"><h4 class="card-title">Sign up</h4></header>
 		<form action="{% url 'register' %}" method="POST">
 			{% csrf_token %}
@@ -42,8 +42,8 @@
 				{{form.email.errors}}
 				{{form.non_field_errors}}
 			    <div class="form-group">
-			        <button type="submit" class="btn btn-primary btn-block"> Register  </button>
-			    </div> 
+			        <button type="submit" class="btn btn-primary btn-block"> Register </button>
+			    </div>	
 			</form>
 		</article>
     </div>
