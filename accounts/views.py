@@ -80,5 +80,4 @@ def logout(request):
 
 
 def activate(request, uidb64, token):
-    
     return HttpResponse('You are verified successfully!')
