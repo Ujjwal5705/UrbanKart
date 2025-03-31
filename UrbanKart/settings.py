@@ -13,7 +13,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 import os
 from dotenv import load_dotenv
 from pathlib import Path
-load_dotenv() 
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -78,7 +79,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "UrbanKart.wsgi.application"
 
-AUTH_USER_MODEL = 'accounts.Account'
+AUTH_USER_MODEL = "accounts.Account"
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
@@ -131,13 +132,14 @@ STATICFILES_DIRS = [
     "UrbanKart/static",
 ]
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 from django.contrib.messages import constants as messages
+
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 MESSAGE_TAGS = {
@@ -145,9 +147,9 @@ MESSAGE_TAGS = {
 }
 
 
-#SMTP Configuration
+# SMTP Configuration
 EMAIL_HOST = os.getenv("EMAIL_HOST")
 EMAIL_PORT = os.getenv("EMAIL_PORT")
 EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
-EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS") == 'true'
+EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS") == "true"
