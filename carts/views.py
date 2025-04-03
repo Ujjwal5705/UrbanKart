@@ -113,14 +113,15 @@ def cart(request, total_price=0, total_quantity=0, cart_items=None):
             total_quantity += (cart_item.quantity)
         tax = (2*total_price)/100
         grand_total = tax + total_price
-    except CartItem.DoesNotExist:
-        pass               #just pass (ignore)
+    except Cart.DoesNotExist:
+        tax = 0
+        grand_total = 0
 
     context = {
-        "total_price": total_price,
+        "total_price": total_price, 
         "tax": tax,
         "grand_total": grand_total,
-        "total_quantity": total_quantity,
-        "cart_items": cart_items,
+        "total_quantity": total_quantity, 
+        "cart_items": cart_items,    
     }
     return render(request, 'store/cart.html', context)
