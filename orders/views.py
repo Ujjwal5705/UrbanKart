@@ -53,6 +53,10 @@ def place_order(request):
             data.order_number = today.strftime("%Y%m%d") + str(data.id)
             data.save()
 
-            return redirect('checkout')
+            return redirect('payment')
 
     return redirect('checkout')
+
+
+def payment(request):
+    return render(request, 'orders/payment.html')
