@@ -8,7 +8,6 @@ from datetime import date
 # Create your views here.
 
 from django.shortcuts import render, redirect
-from carts.models import CartItem
 from .forms import OrderForm
 from .models import Order
 from datetime import date
@@ -50,10 +49,20 @@ def place_order(request):
 
             # Generate order number
             today = date.today()
+            order_number = today.strftime("%Y%m%d") + str(data.id)
             data.order_number = today.strftime("%Y%m%d") + str(data.id)
             data.save()
 
-            return redirect('payment')
+            order = Order.objects.get(user=current_user, is_ordered=False, order_number=order_number)
+            cart_items = CartItem.objects.filter(user=current_user, is_active=True)
+            context = {
+                "tax": tax,
+                "total_price": total_price,
+                "grand_total": grand_total,
+                "order": order,
+                "cart_items": cart_items,
+            }
+            return render(request, 'orders/payment.html', context)
 
     return redirect('checkout')
 
