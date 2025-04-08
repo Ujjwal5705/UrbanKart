@@ -29,10 +29,10 @@ class Order(models.Model):
     order_number = models.CharField(max_length=100)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
-    phone = models.CharField(max_length=15)
+    phone_number = models.CharField(max_length=15)
     email = models.EmailField(max_length=50)
-    address_line1 = models.CharField(max_length=100)
-    address_line2 = models.CharField(max_length=100, blank=True)
+    address1 = models.CharField(max_length=100)
+    address2 = models.CharField(max_length=100, blank=True)
     country = models.CharField(max_length=50)
     state = models.CharField(max_length=50)
     city = models.CharField(max_length=50)
@@ -46,7 +46,7 @@ class Order(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.user.first_name
+        return self.first_name
     
 
 class OrderProduct(models.Model):
