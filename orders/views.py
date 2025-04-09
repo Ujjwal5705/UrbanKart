@@ -61,6 +61,7 @@ def place_order(request):
                 "grand_total": grand_total,
                 "order": order,
                 "cart_items": cart_items,
+                "order_number": order_number,
             }
             return render(request, 'orders/payment.html', context)
 
