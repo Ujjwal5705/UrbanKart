@@ -4,6 +4,7 @@ from carts.models import CartItem
 from .forms import OrderForm
 from .models import Order
 from datetime import date
+import json
 
 # Create your views here.
 
@@ -69,4 +70,6 @@ def place_order(request):
 
 
 def payment(request):
+    body = json.loads(request.body)
+    print(body)
     return render(request, 'orders/payment.html')
