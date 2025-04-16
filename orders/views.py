@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from carts.models import CartItem
 from .forms import OrderForm
 from .models import Order, Payment, OrderProduct
+from store.models import Product
 from datetime import date
 import json
 
@@ -86,6 +87,7 @@ def payment(request):
     order.is_ordered = True
     order.save()
 
+    # Move cartitems to OrderProduct
     cart_items = CartItem.objects.filter(user=request.user)
 
     for item in cart_items:
@@ -102,4 +104,12 @@ def payment(request):
         ordered_product.variations.set(item.variations.all())
         ordered_product.save()
         
+        # Reduce sold product stock quantity
+        product = Product.objects.get(id=item.product.id)
+        product.stock -= item.quantity
+        product.save()
+
+    #delete cart after order payment
+    cart_items.delete()
+
     return render(request, 'orders/payment.html')
