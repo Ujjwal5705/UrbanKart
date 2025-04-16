@@ -9,6 +9,13 @@ class OrderAdmin(admin.ModelAdmin):
     search_fields = ["order_number", "full_name", "email", "phone_number"]
     list_per_page = 20
 
+
+class PaymentAdmin(admin.ModelAdmin):
+    list_display = ["user", "payment_id", "payment_method", "amount_paid", "status", "created_at"]
+    list_filter = ["status"]
+    search_fields = ["user", "payment_id"]
+    list_per_page = 20
+
 admin.site.register(Order, OrderAdmin)
-admin.site.register(Payment)
+admin.site.register(Payment, PaymentAdmin)
 admin.site.register(OrderProduct)
