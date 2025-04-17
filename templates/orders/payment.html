@@ -127,6 +127,7 @@
   const amount = "{{grand_total}}";
   const payment_url = "{% url 'payment' %}";
   const orderID = "{{order_number}}";
+  const redirect_url = "{% url 'order_complete' %}"
 
   // Render the PayPal button into #paypal-button-container
   paypal.Buttons({
@@ -165,8 +166,12 @@
             transID: details.id,
             payment_method: 'PayPal',
             status: details.status,
-          }),
+          })
         })
+        .then((response) => response.json())
+        .then((data) => {
+          window.location.href = redirect_url + '?order_number=' + data.order_number + '&transID=' + data.transID;
+        });
       });
     }
   }).render('#paypal-button-container'); // Display payment options on your web page

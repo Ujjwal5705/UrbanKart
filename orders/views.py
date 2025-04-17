@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from carts.models import CartItem
 from .forms import OrderForm
 from accounts.models import Account
@@ -7,7 +7,6 @@ from .models import Order, Payment, OrderProduct
 from store.models import Product
 from datetime import date
 import json
-
 
 # confirmation email
 from django.contrib.sites.shortcuts import get_current_site
@@ -135,4 +134,13 @@ def payment(request):
     send_email = EmailMessage(mail_subject, message, to=[to_email])
     send_email.send()
 
-    return render(request, 'orders/payment.html')
+    # Send order number and transaction id back to sendData method via JsonResponse
+    data = {
+        "order_number": order.order_number,
+        "transID": payment.payment_id,
+    }
+    return JsonResponse(data)
+
+def order_complete(request):
+    
+    return render(request, 'orders/order_complete.html')
