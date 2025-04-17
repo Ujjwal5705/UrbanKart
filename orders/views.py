@@ -2,10 +2,20 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from carts.models import CartItem
 from .forms import OrderForm
+from accounts.models import Account
 from .models import Order, Payment, OrderProduct
 from store.models import Product
 from datetime import date
 import json
+
+
+# confirmation email
+from django.contrib.sites.shortcuts import get_current_site
+from django.template.loader import render_to_string
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.contrib.auth.tokens import default_token_generator
+from django.core.mail import EmailMessage
 
 # Create your views here.
 
@@ -103,13 +113,26 @@ def payment(request):
 
         ordered_product.variations.set(item.variations.all())
         ordered_product.save()
-        
+
         # Reduce sold product stock quantity
         product = Product.objects.get(id=item.product.id)
         product.stock -= item.quantity
         product.save()
 
-    #delete cart after order payment
+    #delete cart items after order payment
     cart_items.delete()
+
+    #order confirmation email
+    mail_subject = "Thank you for your Order!"
+    message = render_to_string(
+        "orders/order_recieved_mail.html",
+        {
+            "user": request.user,
+            "order": order,
+        },
+    )
+    to_email = request.user.email
+    send_email = EmailMessage(mail_subject, message, to=[to_email])
+    send_email.send()
 
     return render(request, 'orders/payment.html')
