@@ -70,3 +70,5 @@ class OrderProduct(models.Model):
     def __str__(self):
         return self.product.product_name
     
+    def total_price(self):
+        return self.product_price * self.quantity

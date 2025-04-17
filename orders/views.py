@@ -142,5 +142,27 @@ def payment(request):
     return JsonResponse(data)
 
 def order_complete(request):
+    order_number = request.GET['order_number']
+    transID = request.GET['transID']
     
-    return render(request, 'orders/order_complete.html')
+    try:
+        order = Order.objects.get(order_number=order_number, is_ordered=True)
+        ordered_products = OrderProduct.objects.filter(order=order)
+
+        sub_total = 0
+        for item in ordered_products:
+            sub_total += (item.product_price*item.quantity)
+        grand_total = sub_total + order.tax
+
+        context = {
+            'order_number': order_number,
+            'transID': transID,
+            'order': order,
+            'ordered_products': ordered_products,
+            'sub_total': sub_total,
+            'grand_total': grand_total,
+        }
+    except:
+        return redirect('home')
+        
+    return render(request, 'orders/order_complete.html', context)
