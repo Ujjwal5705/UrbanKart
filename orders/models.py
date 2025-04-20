@@ -1,6 +1,7 @@
 from django.db import models
 from accounts.models import Account
-from store.models import Product, Variation
+from store.models import Product, Variation, ReviewRating
+from django.db.models import Avg
 
 # Create your models here.
 
@@ -14,7 +15,7 @@ class Payment(models.Model):
 
     def __str__(self):
         return self.payment_id
-
+    
 
 class Order(models.Model):
     STATUS = (
