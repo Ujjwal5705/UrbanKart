@@ -4,6 +4,7 @@ from .models import Account
 from django.contrib import messages, auth
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
+from orders.models import Order
 
 # verification email
 from django.contrib.sites.shortcuts import get_current_site
@@ -138,7 +139,12 @@ def login(request):
 
 @login_required(login_url="login")
 def dashboard(request):
-    return render(request, "accounts/dashboard.html")
+    orders = Order.objects.filter(user=request.user, is_ordered=True)
+    orders_count = orders.count()
+    context = {
+        'orders_count': orders_count,
+    }
+    return render(request, "accounts/dashboard.html", context)
 
 
 @login_required(login_url="login")
@@ -235,3 +241,11 @@ def reset_password(request):
             return redirect("login")
 
     return render(request, "accounts/resetpassword.html")
+
+
+def my_orders(request):
+    orders = Order.objects.filter(user=request.user, is_ordered=True).order_by('-created_at')
+    context = {
+        'orders': orders,
+    }
+    return render(request, 'accounts/my_orders.html', context)
