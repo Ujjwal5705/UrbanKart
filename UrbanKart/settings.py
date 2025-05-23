@@ -15,7 +15,6 @@ from dotenv import load_dotenv
 from pathlib import Path
 from decouple import config
 
-
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -48,6 +47,7 @@ INSTALLED_APPS = [
     "store",
     "carts",
     "orders",
+    "admin_honeypot",
 ]
 
 MIDDLEWARE = [
