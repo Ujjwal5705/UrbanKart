@@ -141,8 +141,11 @@ def login(request):
 def dashboard(request):
     orders = Order.objects.filter(user=request.user, is_ordered=True)
     orders_count = orders.count()
+    user_profile = get_object_or_404(UserProfile, user=request.user)
+    
     context = {
         'orders_count': orders_count,
+        'user_profile': user_profile,
     }
     return render(request, "accounts/dashboard.html", context)
 
